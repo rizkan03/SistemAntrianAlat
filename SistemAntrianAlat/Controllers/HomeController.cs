@@ -10,7 +10,7 @@ namespace SistemAntrianAlat.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Pengajuan");
         }
 
         public ActionResult About()
@@ -26,5 +26,7 @@ namespace SistemAntrianAlat.Controllers
 
             return View();
         }
+
+
     }
 }

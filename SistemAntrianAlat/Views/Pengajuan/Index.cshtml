@@ -1,0 +1,28 @@
+﻿@model IEnumerable<SistemAntrianAlat.Models.Pengajuan>
+
+<h2>Daftar Pengajuan Perbaikan Alat</h2>
+<a href="/Pengajuan/Create">Tambah Pengajuan</a>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Alat</th>
+        <th>Alasan Perbaikan</th>
+        <th>Status</th>
+        <th>TglPengajuan</th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Alat</td>
+            <td>@item.Alasan</td>
+            <td>@item.Status</td>
+            <td>@item.TglPengajuan</td>
+            <td>
+                <a href="/Project/Details/@item.PengajuanId">Detail</a> |
+                @*<a href="/Project/Delete/@item.ProjectId">Delete</a>*@
+            </td>
+        </tr>
+    }
+</table>
