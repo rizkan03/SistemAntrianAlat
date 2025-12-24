@@ -16,7 +16,7 @@ namespace SistemAntrianAlat.Controllers
         // GET: Project
         public ActionResult Index()
         {
-            var projects = db.Pengajuan.ToList();
+            var projects = db.Pengajuan.OrderByDescending(x => x.PengajuanId).ToList();
             return View(projects);
         }
 
@@ -49,13 +49,26 @@ namespace SistemAntrianAlat.Controllers
         {
             var project = db.Pengajuan.FirstOrDefault(p => p.PengajuanId == id);
 
-            var soilTests = db.SoilTest
-                              .Where(s => s.ProjectId == id)
+            var antrian = db.Pengajuan
+                              .Where(s => s.PengajuanId == id && s.Status != "Selesai")
                               .ToList();
 
-            ViewBag.SoilTests = soilTests;
+            ViewBag.antrian = antrian;
 
             return View(project);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateStatus(int pengajuanId, string status)
+        {
+            var data = db.Pengajuan.FirstOrDefault(x => x.PengajuanId == pengajuanId);
+            if (data == null)
+                return HttpNotFound();
+
+            data.Status = status;
+            db.SaveChanges();
+
+            return RedirectToAction("Details", new { id = pengajuanId });
         }
     }
 }

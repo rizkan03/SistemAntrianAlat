@@ -1,0 +1,61 @@
+﻿@model SistemAntrianAlat.Models.Pengajuan
+
+<h2>Detail Pengajuan</h2>
+
+<p><b>Unit Kerja : </b> @Model.UnitKerja</p>
+<p><b>Alat : </b> @Model.Alat</p>
+<p><b>Alasan Pengajuan : </b> @Model.Alasan</p>
+@*<p><b>Status:</b> @Model.Status</p>*@
+
+<hr />
+
+<h3>Antrian Perbaikan</h3>
+@*<a href="/Pengajuan/Create?projectId=@Model.PengajuanId">Antrian Perbaikan</a>*@
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Unit Kerja</th>
+        <th>Alat</th>
+        <th>Alasan Perbaikan</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in ViewBag.antrian)
+    {
+        <tr>
+            <td>@item.UnitKerja</td>
+            <td>@item.Alat</td>
+            <td>@item.Alasan</td>
+
+
+            <td>
+                @using (Html.BeginForm("UpdateStatus", "Pengajuan", FormMethod.Post))
+                {
+                    <input type="hidden" name="pengajuanId" value="@item.PengajuanId" />
+
+                    @Html.DropDownList(
+                        "status",
+                        new SelectList(
+                            new[] { "Diperiksa", "Diperbaiki", "Selesai" },
+                            item.Status
+                        )
+                    )
+                }
+            </td>
+
+
+            @*<td>@item.TglPengajuan</td>*@
+            <td>
+                <input type="submit" value="Save" />
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+
+
+<br />
+<a href="/Pengajuan/Index">Kembali</a>
